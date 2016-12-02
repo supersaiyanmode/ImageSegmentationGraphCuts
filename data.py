@@ -65,6 +65,7 @@ def create_graph(image, image_seed):
                     elif moveIndex == constants.BOTTOM:
                         node.setBottom(edge)
                         adjNode.setTop(edge)
+    return nodeMap
 
 def main():
     nara = read_image('dataset/nara.png')
