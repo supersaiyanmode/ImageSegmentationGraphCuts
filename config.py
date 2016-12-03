@@ -1,2 +1,2 @@
-background_cost = 10.0
+background_cost = 1
 

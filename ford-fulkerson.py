@@ -60,7 +60,7 @@ def minCut(graph, s, t):
         while iterNode != s:
             fromPath = parent[iterNode]
             residualGraph[fromPath][iterNode] -= minPathFlow
-            residualGraph[iterNode][fromPath] += minPathFlow
+            #residualGraph[iterNode][fromPath] += minPathFlow
             iterNode = fromPath
 
     isVisited = [False] * nrow
@@ -82,12 +82,12 @@ def minCut(graph, s, t):
                 print rowIndex, colIndex
 
 def main():
-    graph = [[0, 16, 13, 0, 0, 0],
-               [0, 0, 10, 12, 0, 0],
-               [0, 4, 0, 0, 14, 0],
-               [0, 0, 9, 0, 0, 20],
-               [0, 0, 0, 7, 0, 4],
-               [0, 0, 0, 0, 0, 0]]
+    graph = [  [0 , 16, 13,  0, 0, 0],
+               [16,  0, 10, 12, 0, 0],
+               [13, 10,  0,  9,14, 0],
+               [0,  12,  9,  0, 7, 20],
+               [0,   0, 14,  7, 0, 4],
+               [0,   0,  0, 20, 4, 0]]
 
     minCut(graph, 0, 5)
 

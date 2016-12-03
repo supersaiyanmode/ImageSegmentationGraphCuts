@@ -48,7 +48,7 @@ def construct_nodes(image, image_seed):
 def calc_fg_weight(node, gauss):
     if node.label == constants.FOREGROUND:
         return float("inf")
-    return math.log(gauss.pdf(node.intensity))
+    return 5 + math.log(gauss.pdf(node.intensity))
 
 def calc_bg_weight(node):
     if node.label == constants.BACKGROUND:
@@ -56,7 +56,7 @@ def calc_bg_weight(node):
     return config.background_cost
 
 def calc_weight(node, neighbor):
-    return None
+    return 
 
 def construct_graph(image, image_seed):
     graph = construct_nodes(image, image_seed)
@@ -71,10 +71,9 @@ def construct_graph(image, image_seed):
         adj_position = [(x[0]+y[0], x[1]+y[1]) for x, y in zip(constants.MOVES, [pos]*4)]
         neighbors = [graph[x] for x in adj_position if x in graph]
 
-        edges = [Edge(node, x, calc_weight(node, x)) for x in neighbors]
-
         fg_weight = calc_fg_weight(node, gauss)
         bg_weight = calc_bg_weight(node)
+        edges = [Edge(node, x, calc_weight(node, x)) for x in neighbors]
 
         fg_edge = Edge(node, fg_node, fg_weight)
         bg_edge = Edge(node, bg_node, bg_weight)
@@ -100,9 +99,9 @@ def stats(graph):
 def suppress_pixels(image, nodes):
     res = image.copy()
     for node in nodes:
-        res(node.coord[0], node.coord[1], 0) = 0
-        res(node.coord[0], node.coord[1], 1) = 0
-        res(node.coord[0], node.coord[1], 2) = 0
+        res[node.coord[0], node.coord[1], 0] = 0
+        res[node.coord[0], node.coord[1], 1] = 0
+        res[node.coord[0], node.coord[1], 2] = 0
     return res
 
 def main():

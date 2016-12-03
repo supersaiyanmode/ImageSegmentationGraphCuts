@@ -1,5 +1,4 @@
-from data import construct_nodes
-from data import construct_edges
+from data import construct_graph
 from data import suppress_pixels
 
 def bfs(graph, source, target):
@@ -48,6 +47,21 @@ def min_cut(graph, source, target):
 
     return reachable_bfs(graph, source), \
             reachable_bfs(graph, target)
+def naive_segment_image(image, seed):
+    graph, fg_node, bg_node = construct_graph(image, seed)
+    fg_nodes = []
+    bg_nodes = []
+
+    for coord, node in graph.iteritems():
+        fg_edge = [x for x in node.edges if x.get_other(node).is_fg()][0]
+        bg_edge = [x for x in node.edges if x.get_other(node).is_bg()][0]
+        if fg_edge.capacity > bg_edge.capacity:
+            bg_nodes.append(node)
+        else:
+            fg_nodes.append(node)
+    fg_image = suppress_pixels(image, bg_nodes)
+    bg_image = suppress_pixels(image, fg_nodes)
+    return fg_image, bg_image
 
 def segment_image(image, seed):
     graph, fg_node, bg_node = construct_graph(image, seed)
