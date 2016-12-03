@@ -58,7 +58,9 @@ def calc_bg_weight(node):
 def calc_weight(node, neighbor):
     return None
 
-def construct_edges(graph):
+def construct_graph(image, image_seed):
+    graph = construct_nodes(image, image_seed)
+
     mean, variance = stats(graph)
     gauss = multivariate_normal(mean=mean, cov=variance)
 
@@ -77,6 +79,7 @@ def construct_edges(graph):
         fg_edge = Edge(node, fg_node, fg_weight)
         bg_edge = Edge(node, bg_node, bg_weight)
 
+    return graph, fg_node, bg_node
 
 def split_pixels(graph):
     fg_pixels = [x.intensity for _, x in graph.iteritems() if x.label == constants.FOREGROUND]
@@ -92,7 +95,15 @@ def stats(graph):
     variance = [x - y*y for x,y in zip(variance, mean)]
 
     var_mat = np.diag(variance)
-    return mean, variance
+    return mean, var_mat
+
+def suppress_pixels(image, nodes):
+    res = image.copy()
+    for node in nodes:
+        res(node.coord[0], node.coord[1], 0) = 0
+        res(node.coord[0], node.coord[1], 1) = 0
+        res(node.coord[0], node.coord[1], 2) = 0
+    return res
 
 def main():
     nara = read_image_rgb('dataset/nara.png')
