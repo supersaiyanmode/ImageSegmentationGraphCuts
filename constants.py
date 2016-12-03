@@ -1,17 +1,5 @@
-NUMBER_OF_EDGES = 4
-LEFT = 0
-RIGHT = 1
-TOP = 2
-BOTTOM = 3
 MOVES = [(0, -1), (0, 1), (-1, 0), (1, 0)]
 
 FOREGROUND = 0
 BACKGROUND = 1
 
-NUMBER_OF_COLORS = 3
-RED = 0
-GREEN = 1
-BLUE = 2
-
-# background and foreground
-CLASSIFICATION_TYPE = 2
