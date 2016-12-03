@@ -1,42 +1,24 @@
 import constants
 
-class Node:
-    def __init__(self, intensity, label, x, y):
-        self.x = x
-        self.y = y
-        self.intensity = intensity
+
+class Node(object):
+    def __init__(self, coord, intensity, label):
         self.label = label
+        self.coord = coord
+        self.intensity = intensity
+        self.value = self.to_grayscale(self.intensity) \
+                if self.intensity is not None else None
+        self.edges = set()
+    
+    def to_grayscale(self, rgb):
+        return rgb
 
-        # left, right, top and bottom edges
-        self.edges = [None] * constants.NUMBER_OF_EDGES
+    def get_neighbors(self):
+        return [x.get_other(self) for x in self.edges]
 
-    def __eq__(self, other):
-        return self.x == other.x and self.y == other.y
+    def is_bg(self):
+        return self.label == "bg"
 
-    def setRight(self, other):
-        self.edges[constants.RIGHT] = other
-
-    def getRight(self):
-        return self.edges[constants.RIGHT]
-
-    def setLeft(self, other):
-        self.edges[constants.LEFT] = other
-
-    def getLeft(self):
-        return self.edges[constants.LEFT]
-
-    def setTop(self, other):
-        self.edges[constants.TOP] = other
-
-    def getTop(self):
-        return self.edges[constants.TOP]
-
-    def setBottom(self, other):
-        self.edges[constants.BOTTOM] = other
-
-    def getBottom(self):
-        return self.edges[constants.BOTTOM]
-
-
-
+    def is_fg(self):
+        return self.label == "fg"
 
