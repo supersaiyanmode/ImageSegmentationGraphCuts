@@ -1,8 +1,9 @@
 
 class Edge(object):
-    def __init__(self, node1, node2, weight):
+    def __init__(self, node1, node2, capacity):
         self.node1, self.node2 = sorted([node1, node2], key=lambda x: x.coord)
-        self.weight = weight
+        self.capacity = capacity
+        self.capacityLeft = capacity
 
         self._connect(node1, node2)
 
