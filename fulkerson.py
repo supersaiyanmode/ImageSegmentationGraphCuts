@@ -1,6 +1,8 @@
+from random import shuffle
 from data import construct_graph
 from data import suppress_pixels
 import config
+
 
 
 def bfs(source, target):
@@ -13,7 +15,10 @@ def bfs(source, target):
         if node.coord == target.coord:
             return path
 
-        for edge in node.edges:
+        edges = node.edges
+        if config.randomized_bfs:
+            shuffle(edges)
+        for edge in edges:
             neigh_node = edge.get_other(node)
             if neigh_node.coord not in visited and edge.residual > config.residue_thresh:
                 queue.append((neigh_node, path + [edge]))

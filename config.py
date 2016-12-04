@@ -4,4 +4,5 @@ residue_thresh = 0.3
 
 verbose = 0
 show_result = False
+randomized_bfs = True
 
