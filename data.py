@@ -3,6 +3,7 @@ import math
 import cv2
 import numpy as np
 from scipy.stats import multivariate_normal
+from scipy.spatial.distance import euclidean
 
 from node import Node
 import constants
@@ -48,15 +49,15 @@ def construct_nodes(image, image_seed):
 def calc_fg_weight(node, gauss):
     if node.label == constants.FOREGROUND:
         return float("inf")
-    return 5 + math.log(gauss.pdf(node.intensity))
+    return (1 - (gauss.pdf(gauss.mean) - gauss.pdf(node.intensity)) / gauss.pdf(gauss.mean))
 
-def calc_bg_weight(node):
+def calc_bg_weight(node, gauss):
     if node.label == constants.BACKGROUND:
         return float("inf")
-    return config.background_cost
+    return (gauss.pdf(gauss.mean) - gauss.pdf(node.intensity)) / gauss.pdf(gauss.mean)
 
-def calc_weight(node, neighbor):
-    return 
+def calc_weight(node, neighbor, max_dist=euclidean((0,0,0), (255,255,255))):
+    return 1 - (euclidean(node.intensity, neighbor.intensity) / max_dist)
 
 def construct_graph(image, image_seed):
     graph = construct_nodes(image, image_seed)
@@ -72,11 +73,15 @@ def construct_graph(image, image_seed):
         neighbors = [graph[x] for x in adj_position if x in graph]
 
         fg_weight = calc_fg_weight(node, gauss)
-        bg_weight = calc_bg_weight(node)
-        edges = [Edge(node, x, calc_weight(node, x)) for x in neighbors]
+        bg_weight = calc_bg_weight(node, gauss)
 
         fg_edge = Edge(node, fg_node, fg_weight)
         bg_edge = Edge(node, bg_node, bg_weight)
+
+        edges = [Edge(node, x, calc_weight(node, x)) for x in neighbors]
+
+    graph[fg_node.coord] = fg_node
+    graph[bg_node.coord] = bg_node
 
     return graph, fg_node, bg_node
 
