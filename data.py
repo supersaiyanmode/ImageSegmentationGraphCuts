@@ -108,13 +108,3 @@ def suppress_pixels(image, nodes):
         res[node.coord[0], node.coord[1], 1] = 0
         res[node.coord[0], node.coord[1], 2] = 0
     return res
-
-def main():
-    nara = read_image_rgb('dataset/nara.png')
-    nara_seed = read_image_rgb('dataset/nara-seeds.png')
-    graph = construct_nodes(nara, nara_seed)
-    construct_edges(graph)
-
-if __name__ == '__main__':
-    main()
-
