@@ -44,12 +44,13 @@ def print_path(path):
     s += "-" + str(path[-1].residual) + "-" + str(path[-1].node1)
     print "Got path(%d)"%len(path), s
 
-def min_cut(source, target):
+def min_cut(graph, source, target):
     while True:
         path = bfs(source, target)
         if path is None:
             break
         print_path(path)
+        #print path
 
         min_edge = min(path, key=lambda x: x.residual)
         mid_edge_val = min_edge.residual
@@ -59,7 +60,10 @@ def min_cut(source, target):
         #print "Updated path: ", path
         #print ""
 
-    return reachable_bfs(source), reachable_bfs(target)
+    fg_coords = reachable_bfs(source)
+    bg_coords = [x for x in graph if x not in fg_coords]
+
+    return fg_coords, bg_coords
 
 def naive_segment_image(image, seed):
     graph, fg_node, bg_node = construct_graph(image, seed)
@@ -85,7 +89,7 @@ def segment_image(image, seed):
     graph, fg_node, bg_node = construct_graph(image, seed)
     print "Graph constructed"
 
-    fg_coords, bg_coords = min_cut(fg_node, bg_node)
+    fg_coords, bg_coords = min_cut(graph, fg_node, bg_node)
     fg_nodes = [graph[x] for x in fg_coords]
     bg_nodes = [graph[x] for x in bg_coords]
 
