@@ -12,8 +12,15 @@ def main():
     img_fg1, img_bg1 = naive_segment_image(image, seed)
     img_fg2, img_bg2 = segment_image(image, seed)
 
-    imshow('Foreground', img_fg)
-    imshow('Background', img_bg)
+    imwrite("fg-naive.png", img_fg1)
+    imwrite("bg-naive.png", img_bg1)
+    imwrite("fg-gc.png", img_fg2)
+    imwrite("bg-gc.png", img_bg2)
+
+    imshow('Foreground-Naive', img_fg1)
+    imshow('Background-Naive', img_bg1)
+    imshow('Foreground-GC', img_fg2)
+    imshow('Background-GC', img_bg2)
     waitKey()
 
 
