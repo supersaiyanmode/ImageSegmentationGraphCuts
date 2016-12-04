@@ -15,7 +15,7 @@ def bfs(source, target):
         if node.coord == target.coord:
             return path
 
-        edges = node.edges
+        edges = list(node.edges)
         if config.randomized_bfs:
             shuffle(edges)
         for edge in edges:
