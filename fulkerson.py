@@ -42,23 +42,26 @@ def reachable_bfs(source):
 def print_path(path):
     s = str(path[0].node1) + "".join("-" + str(p.residual) + "-" + str(p.node2) for p in path[:-1])
     s += "-" + str(path[-1].residual) + "-" + str(path[-1].node1)
-    print "Got path(%d)"%len(path), s
+    if config.verbose:
+        print "Got path(%d)"%len(path), s
 
 def min_cut(graph, source, target):
     while True:
         path = bfs(source, target)
         if path is None:
             break
-        print_path(path)
-        #print path
+        if config.verbose:
+            print_path(path)
 
         min_edge = min(path, key=lambda x: x.residual)
         mid_edge_val = min_edge.residual
-        #print "Minimum edge: ", min_edge
         for p in path:
             p.residual -= mid_edge_val
-        #print "Updated path: ", path
-        #print ""
+
+        if config.verbose >= 2:
+            print "Minimum edge: ", min_edge
+            print "Updated path: ", path
+            print ""
 
     fg_coords = reachable_bfs(source)
     bg_coords = [x for x in graph if x not in fg_coords]

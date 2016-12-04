@@ -17,11 +17,12 @@ def main():
     imwrite("fg-gc.png", img_fg2)
     imwrite("bg-gc.png", img_bg2)
 
-    imshow('Foreground-Naive', img_fg1)
-    imshow('Background-Naive', img_bg1)
-    imshow('Foreground-GC', img_fg2)
-    imshow('Background-GC', img_bg2)
-    waitKey()
+    if config.show_result:
+        imshow('Foreground-Naive', img_fg1)
+        imshow('Background-Naive', img_bg1)
+        imshow('Foreground-GC', img_fg2)
+        imshow('Background-GC', img_bg2)
+        waitKey()
 
 
 if __name__ == '__main__':
