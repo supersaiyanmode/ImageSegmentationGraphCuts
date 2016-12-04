@@ -10,17 +10,19 @@ def main():
     node5 = Node((5,5), None, None)
     node6 = Node((6,6), None, None)
 
-    edge12 = Edge(node1, node2, 16)
-    edge13 = Edge(node1, node3, 13)
-    edge23 = Edge(node2, node3, 10)
-    edge24 = Edge(node2, node4, 12)
-    edge34 = Edge(node3, node4, 9)
-    edge35 = Edge(node3, node5, 14)
-    edge45 = Edge(node4, node5, 7)
-    edge46 = Edge(node4, node6, 20)
-    edge56 = Edge(node5, node6, 4)
+    edge12 = Edge(node1, node2, 10)
+    edge13 = Edge(node1, node3, 10)
+    edge23 = Edge(node2, node3, 2)
+    edge24 = Edge(node2, node4, 4)
+    edge25 = Edge(node2, node5, 8)
+    edge34 = Edge(node3, node5, 9)
+    edge45 = Edge(node4, node5, 6)
+    edge46 = Edge(node4, node6, 10)
+    edge56 = Edge(node5, node6, 10)
 
-    src, tar = min_cut(node1, node6)
+    graph = {y.coord:y for x,y in locals().items() if "node" in x}
+
+    src, tar = min_cut(graph, node1, node6)
     print "Source: ", src
     print "target: ", tar
 
