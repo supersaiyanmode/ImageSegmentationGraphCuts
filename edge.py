@@ -22,3 +22,5 @@ class Edge(object):
     def __eq__(self, other):
         return self.node1.coord == self.node2.coord
 
+    def __repr__(self):
+        return str(self.node1) + "-" + str(self.residual) + "-" + str(self.node2)

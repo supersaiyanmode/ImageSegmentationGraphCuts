@@ -22,3 +22,6 @@ class Node(object):
     def is_fg(self):
         return self.label == "fg"
 
+    def __repr__(self):
+        return "Node:" + str(self.coord)
+
