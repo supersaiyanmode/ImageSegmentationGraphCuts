@@ -3,15 +3,22 @@ import sys
 from cv2 import waitKey, imshow, imwrite
 
 from data import read_image_rgb
-from fulkerson import naive_segment_image
-from fulkerson import segment_image
+from segment import naive_segment_image
+from segment import segment_image
+from fulkerson import min_cut as min_cut_fulkerson
+from bidirectional import min_cut as min_cut_bidirectional
 import config
 
 def main():
     image, seed = map(read_image_rgb, sys.argv[1:])
 
+    algorithm = {
+        "fulkerson": min_cut_fulkerson,
+        "bidirectional": min_cut_bidirectional
+    }[config.algorithm]
+
     img_fg1, img_bg1 = naive_segment_image(image, seed)
-    img_fg2, img_bg2 = segment_image(image, seed)
+    img_fg2, img_bg2 = segment_image(algorithm, image, seed)
 
     imwrite("fg-naive.png", img_fg1)
     imwrite("bg-naive.png", img_bg1)
