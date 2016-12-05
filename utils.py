@@ -5,7 +5,7 @@ def print_path(path):
     s = str(path[0].node1) + "".join("-" + str(p.residual) + "-" + str(p.node2) for p in path[:-1])
     s += "-" + str(path[-1].residual) + "-" + str(path[-1].node1)
     if config.verbose:
-        print "Got path(%d)"%len(path), s
+        print "Got path(%d)" % len(path), s
 
 
 def reachable_bfs(source):

@@ -9,6 +9,7 @@ from fulkerson import min_cut as min_cut_fulkerson
 from bidirectional import min_cut as min_cut_bidirectional
 import config
 
+
 def main():
     image, seed = map(read_image_rgb, sys.argv[1:])
 

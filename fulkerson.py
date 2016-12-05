@@ -6,7 +6,7 @@ from utils import reachable_bfs
 
 def bfs(source, target):
     visited = set()
-    queue = [(source,[])]
+    queue = [(source, [])]
 
     while queue:
         node, path = queue.pop(0)
@@ -14,8 +14,8 @@ def bfs(source, target):
         if node.coord == target.coord:
             return path
 
-        edges = [x for x in node.edges if x.residual > config.residue_thresh and \
-                                    x.get_other(node).coord not in visited]
+        edges = [x for x in node.edges if x.residual > config.residue_thresh and
+                 x.get_other(node).coord not in visited]
         if config.randomized_bfs:
             shuffle(edges)
         for edge in edges:

@@ -1,6 +1,7 @@
 from data import construct_graph
 from data import suppress_pixels
 
+
 def naive_segment_image(image, seed):
     graph, fg_node, bg_node = construct_graph(image, seed)
     print "Graph constructed"
@@ -34,4 +35,3 @@ def segment_image(algorithm, image, seed):
     bg_img = suppress_pixels(image, fg_nodes)
 
     return fg_img, bg_img
-

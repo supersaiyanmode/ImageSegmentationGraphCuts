@@ -16,7 +16,7 @@ def bfs_level_order(source):
             visited.add(node.coord)
             all_paths[node.coord] = path
 
-            edges = [x for x in node.edges if x.residual > config.residue_thresh and \
+            edges = [x for x in node.edges if x.residual > config.residue_thresh and
                      x.get_other(node).coord not in visited]
             for edge in edges:
                 neigh_node = edge.get_other(node)
@@ -33,6 +33,7 @@ def bidirectional_search(source, target):
         for key in s.viewkeys() & t.viewkeys():
             paths.append(s[key] + t[key][::-1])
     return sorted(paths, key=len)
+
 
 def min_cut(graph, source, target):
     max_flow = 0
