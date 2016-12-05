@@ -1,4 +1,5 @@
 import sys
+import time
 
 from cv2 import waitKey, imshow, imwrite
 
@@ -11,6 +12,8 @@ import config
 
 
 def main():
+    start = time.time()
+
     image, seed = map(read_image_rgb, sys.argv[1:])
 
     algorithm = {
@@ -21,10 +24,17 @@ def main():
     img_fg1, img_bg1 = naive_segment_image(image, seed)
     img_fg2, img_bg2 = segment_image(algorithm, image, seed)
 
-    imwrite("fg-naive.png", img_fg1)
-    imwrite("bg-naive.png", img_bg1)
-    imwrite("fg-gc.png", img_fg2)
-    imwrite("bg-gc.png", img_bg2)
+    end = time.time()
+    base = sys.argv[1].replace(".png", "").replace("dataset/","")
+    base = "output/" + base
+
+    with open(base + ".time.txt", "w") as f:
+        print>> f, (end - start)
+
+    imwrite(base + "-fg-naive.png", img_fg1)
+    imwrite(base + "-bg-naive.png", img_bg1)
+    imwrite(base + "-fg-gc.png", img_fg2)
+    imwrite(base + "-bg-gc.png", img_bg2)
 
     if config.show_result:
         imshow('Foreground-Naive', img_fg1)

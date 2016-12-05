@@ -1,4 +1,4 @@
-residue_thresh = 0.4
+residue_thresh = 0.6
 
 verbose = 2
 show_result = True
