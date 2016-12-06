@@ -1,4 +1,5 @@
 from itertools import izip
+from random import shuffle
 
 import config
 from utils import print_path
@@ -18,6 +19,8 @@ def bfs_level_order(source):
 
             edges = [x for x in node.edges if x.residual > config.residue_thresh and
                      x.get_other(node).coord not in visited]
+            if config.randomized_bfs:
+                shuffle(edges)
             for edge in edges:
                 neigh_node = edge.get_other(node)
                 next_level_successors.append((neigh_node, path + [edge]))
@@ -64,7 +67,7 @@ def min_cut(graph, source, target):
     if config.verbose:
         print "Max flow:", max_flow
 
-    fg_coords = reachable_bfs(source)
+    fg_coords = reachable_bfs(target)
     bg_coords = [x for x in graph if x not in fg_coords]
 
     return fg_coords, bg_coords

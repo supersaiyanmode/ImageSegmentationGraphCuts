@@ -3,7 +3,7 @@ import config
 from utils import print_path
 from utils import reachable_bfs
 
-
+# Edmonds-Karp Algorithm implementation
 def bfs(source, target):
     visited = set()
     queue = [(source, [])]
@@ -49,7 +49,7 @@ def min_cut(graph, source, target):
     if config.verbose:
         print "Max flow:", max_flow
 
-    fg_coords = reachable_bfs(source)
+    fg_coords = reachable_bfs(target)
     bg_coords = [x for x in graph if x not in fg_coords]
 
     return fg_coords, bg_coords
